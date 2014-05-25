@@ -27,7 +27,7 @@ KEY_PAGE_DOWN = 34
 
 # CSS classes
 CLASS_PREFIX = 'jqconsole-'
-CLASS_CURSOR = "#{CLASS_PREFIX}cursor"
+CLASS_CURSOR = "#{CLASS_PREFIX}cursor jqconsole-ansi-blink"
 CLASS_HEADER = "#{CLASS_PREFIX}header"
 CLASS_PROMPT = "#{CLASS_PREFIX}prompt"
 CLASS_OLD_PROMPT = "#{CLASS_PREFIX}old-prompt"
@@ -377,7 +377,7 @@ class JQConsole
     @$prompt_right.detach()
     @$prompt_cursor.text ''
     lines = @$console.text().split NEWLINE
-    @$prompt_cursor.html '&nbsp;'
+    @$prompt_cursor.html '_'
     @$prompt_cursor.after @$prompt_right
     return lines[lines.length - 1].length
 
@@ -406,7 +406,7 @@ class JQConsole
     if full
       @$prompt_cursor.text ''
       text = @$prompt.text()
-      @$prompt_cursor.html '&nbsp;'
+      @$prompt_cursor.html '_'
       return text
     else
       getPromptLines = (node) ->
@@ -682,10 +682,10 @@ class JQConsole
     # The cursor. A span containing a space that shades its following character.
     # If the font of the prompt is not monospace, the content should be set to
     # the first character of @$prompt_right to get the appropriate width.
-    @$prompt_cursor = $(spanHtml(CLASS_CURSOR, '&nbsp;'))
+    @$prompt_cursor = $(spanHtml(CLASS_CURSOR, '_'))
     @$prompt_cursor.insertBefore @$prompt_right
     @$prompt_cursor.css
-      color: 'transparent'
+      #color: 'transparent'
       display: 'inline'
       zIndex: 0
     @$prompt_cursor.css('position', 'absolute') if not @isMobile
